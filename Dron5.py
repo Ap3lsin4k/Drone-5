@@ -23,7 +23,7 @@ def get_avg_color(img):
     red = red/n
     green = green / n
     blue = blue / n
-    print(red,green,blue)
+    return(red,green,blue)
 #img = cv2.imread("Photo1.jpg")
 #get_avg_color(img)
 def imposition(img1,img2):
@@ -36,7 +36,7 @@ img2 = Image.open("Photo2.jpg")
 imgwidth, imgheight = img.size
 #img.crop((30, 30, w-80, h-40)).save("file.png")
 amount = 1;
-width, length = 50, 50
+width, length = 15, 10
 img3 = Image.new("RGBA", (220, 220), (255, 255, 255)) 
 img3 = Image.open("redd-11.png").convert("RGBA")
 img3 = img3.resize((width,length), Image.ANTIALIAS)
@@ -57,15 +57,21 @@ for i in range(0,imgheight,length):
         #img.crop((j, i, w, h)).save("images/file"+str(amount)+".png")
         cropimages1=img.crop((j, i, w, h))
         cropimages2=img2.crop((j, i, w, h))
-        color1 =  get_avg_color(cropimages1)
-        color2 =  get_avg_color(cropimages2)
+        imgg1=cropimages1
+        imgg2 = cropimages2
+        imgg1.save("1Crop.jpg")
+        imgg2.save("2Crop.jpg")
+        imgg1= cv2.imread("1Crop.jpg")
+        imgg2 = cv2.imread("2Crop.jpg")
+        color1 =  get_avg_color(imgg1)
+        color2 =  get_avg_color(imgg2)
         mult = abs(color1[0]-color2[0]) * abs(color1[1]-color2[1]) * abs(color1[2]-color2[2])
         print(mult)
-        if not(mult<=125000):
+        if not(mult<=12500):
             imposition(Photosave,img3)
             imposition(Photosave2,img3)
-            cropimages1.save("uncommon/"+"(1)"+str(amount)+str(color1)+".jpg")
-            cropimages2.save("uncommon/"+"(2)"+str(amount)+str(color2)+".jpg")
+            #cropimages1.save("uncommon/"+"(1)"+str(amount)+str(color1)+".jpg")
+            #cropimages2.save("uncommon/"+"(2)"+str(amount)+str(color2)+".jpg")
         amount=amount+1
 image1 = Photosave
 image2 = Photosave2
