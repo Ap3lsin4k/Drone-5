@@ -9,14 +9,20 @@ def get_main_color(img):
         return most_present
     except TypeError:
         raise Exception("Too many colors in the image")
-
+def imposition(img1,img2):
+    im1 = img1
+    im2 = img2
+    im1.paste(im2, (j,i), im2)
 img = Image.open("Photo1.jpg")
 img2 = Image.open("Photo2.jpg")
 imgwidth, imgheight = img.size
 #img.crop((30, 30, w-80, h-40)).save("file.png")
 amount = 1;
 width, length = 70, 70
-
+img3 = Image.open("redd-1.jpg")
+img3 = img3.resize((width,length), Image.ANTIALIAS)
+img3.save("red.jpg")
+Photosave=Image.open("Photo1.jpg")
 for i in range(0,imgheight,length):
     for j in range(0,imgwidth,width):
         if j+width > imgwidth:
@@ -34,9 +40,10 @@ for i in range(0,imgheight,length):
         color1 = get_main_color(cropimages1)
         color2 = get_main_color(cropimages2)
         if not(abs(color1[0]-color2[0])<=50 and abs(color1[1]-color2[1])<=50 and abs(color1[2]-color2[2])<=50 ):
-            cropimages1.save("uncommon/"+"(1)"+str(amount)+str(color1)+".jpg")
-            cropimages2.save("uncommon/"+"(2)"+str(amount)+str(color2)+".jpg")
+            imposition(Photosave,img3)
+            #cropimages1.save("uncommon/"+"(1)"+str(amount)+str(color1)+".jpg")
+            #cropimages2.save("uncommon/"+"(2)"+str(amount)+str(color2)+".jpg")
         amount=amount+1
-
+Photosave.save("Save.jpg")
        
 
